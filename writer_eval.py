@@ -8,10 +8,11 @@ def punctuation_stripper(text):
     no_punct_text = ""
 
     for char in text:
-        if re.fullmatch('\w| ', char) is not None:
+        if re.fullmatch('[A-Za-z0-9]', char) is not None:
             no_punct_text += char
-        elif re.fullmatch('\n', char) is not None:
-            no_punct_text += " "
+        elif re.fullmatch('\s|[!.,&$%\-"]', char) is not None:
+            if no_punct_text[-1:] != " ":
+                no_punct_text += " "
 
     #print (no_punct_text)
     return no_punct_text

@@ -33,7 +33,7 @@ def build_text(collocate_probabilities, text_size):
         output += next_word + " "
         max_probability = ["x", 0]
         for key in collocate_probabilities[next_word]:
-            if collocate_probabilities[next_word][key] >= max_probability[1] and collocate_probabilities[next_word] != " ":
+            if collocate_probabilities[next_word][key] >= max_probability[1] and collocate_probabilities[next_word]:
                 max_probability[1] = collocate_probabilities[next_word][key]
                 max_probability[0] = key
         if max_probability[0] in collocate_probabilities:
