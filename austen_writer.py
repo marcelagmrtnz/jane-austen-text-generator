@@ -1,6 +1,11 @@
 import sys
+import random
 from writer_eval import head_foot_stripper
 from writer_eval import punctuation_stripper
+from writer_probabilities import get_wordlist
+from writer_probabilities import get_wordlist_probabilities
+from writer_probabilities import get_collocates
+from writer_probabilities import get_collocates_probabilities
 
 
 def load_book(title):
@@ -17,75 +22,26 @@ def load_book(title):
     return text
 
 
-# Pulls basic listing of words with their frequencies.
-def get_wordlist(text):
-    wordlist = {}
+# Builds random text output. text_size refers to how many words will be output.
+def build_text(collocate_probabilities, text_size):
+    # Initializing starter word.
+    starter = random.choice(list(collocate_probabilities.keys()))
+    next_word = starter
+    output = ""
 
-    for i in range(len(text)):
-        if text[i] in wordlist:
-            wordlist[text[i]] += 1
+    for i in range(int(text_size)):
+        output += next_word + " "
+        max_probability = ["x", 0]
+        for key in collocate_probabilities[next_word]:
+            if collocate_probabilities[next_word][key] >= max_probability[1] and collocate_probabilities[next_word] != " ":
+                max_probability[1] = collocate_probabilities[next_word][key]
+                max_probability[0] = key
+        if max_probability[0] in collocate_probabilities:
+            next_word = max_probability[0]
         else:
-            wordlist[text[i]] = 1
-    #print(wordlist)
-    return wordlist
+            next_word = random.choice(list(collocate_probabilities.keys()))
 
-
-# Takes basic word listing frequencies and calculates probabilities.
-def get_wordlist_probabilities(wordlist):
-    #print(wordlist)
-    probabilities = wordlist
-    #print (probabilities)
-    #for keys in probabilities:
-        #if isinstance(probabilities[keys], dict):
-           # print(probabilities[keys])
-    word_total = len(probabilities)
-
-    for key in probabilities:
-        word_frequency = probabilities[key]
-        #print(type(word_frequency))
-        percentage = word_frequency / word_total
-        probabilities[key] = percentage
-
-    return probabilities
-
-
-# Pulls wordlist and their collocates + those collocates' frequencies.
-def get_collocates(text):
-    wordlist = {}
-
-    for i in range(len(text)):
-        if text[i] in wordlist:
-            if text[i + 1] in wordlist[text[i]]:
-                wordlist[text[i]][text[i + 1]] += 1
-            else:
-                wordlist[text[i]][text[i + 1]] = 1
-        else:
-            wordlist[text[i]] = {}
-
-    return wordlist
-
-
-# Calculates frequency totals for collocates of each word.
-def get_collocate_total(collocates):
-    collocates_total = 0
-
-    for key in collocates:
-        collocates_total += collocates[key]
-
-    return collocates_total
-
-
-# Takes collocate word list and turns their frequencies to calculated probabilities.
-def get_collocates_probabilities(wordlist):
-    probabilities = wordlist
-
-    for key in probabilities:
-        for key_prime in probabilities[key]:
-            collocates_total = get_collocate_total(probabilities[key])
-            percentage = probabilities[key][key_prime] / collocates_total
-            probabilities[key][key_prime] = percentage
-
-    return probabilities
+    return output + "."
 
 
 def main():
@@ -100,8 +56,10 @@ def main():
     collocates = get_collocates(text)
     collocate_probabilities = get_collocates_probabilities(collocates)
 
-    print(wordlist_probabilities)
-    print(collocate_probabilities)
+    #print(wordlist_probabilities)
+    #print(collocate_probabilities)
+
+    print(build_text(collocate_probabilities, sys.argv[2]))
 
 
 
