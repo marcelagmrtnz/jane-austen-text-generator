@@ -1,5 +1,6 @@
 import sys
 import random
+import re
 from writer_eval import head_foot_stripper
 from writer_eval import punctuation_stripper
 from writer_probabilities import get_wordlist
@@ -26,6 +27,7 @@ def load_book(title):
 def build_text(collocate_probabilities, text_size):
     # Initializing starter word.
     starter = random.choice(list(collocate_probabilities.keys()))
+
     next_word = starter
     output = ""
 
@@ -41,7 +43,23 @@ def build_text(collocate_probabilities, text_size):
         else:
             next_word = random.choice(list(collocate_probabilities.keys()))
 
-    return output + "."
+    return output
+
+
+def format_output(output):
+    # Removing unnecessary uppercase letters.
+    output = output.lower()
+
+    # Replacing necessary uppercase. In this case just pronoun I.
+    for i in range(1, len(output) - 1):
+        pronoun_candidate = output[i - 1] + output[i] + output[i + 1]
+        if re.fullmatch(' I ', pronoun_candidate) is not None:
+            output[i].upper()
+
+    # Fixes sentence edges.
+    output = output[0].upper() + output[1:-1] + '.'
+
+    return output
 
 
 def main():
@@ -59,8 +77,9 @@ def main():
     #print(wordlist_probabilities)
     #print(collocate_probabilities)
 
-    print(build_text(collocate_probabilities, sys.argv[2]))
-
+    output = build_text(collocate_probabilities, sys.argv[2])
+    final_output = format_output(output)
+    print(final_output)
 
 
 
