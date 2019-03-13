@@ -3,22 +3,15 @@ import random
 import re
 from writer_eval import head_foot_stripper
 from writer_eval import punctuation_stripper
-from writer_probabilities import get_wordlist
-from writer_probabilities import get_wordlist_probabilities
 from writer_probabilities import get_collocates
 from writer_probabilities import get_collocates_probabilities
 
 
 def load_book(title):
-    book = open(title, 'r', encoding='utf8')
-    text = book.read()
-
-    text = punctuation_stripper(text)
-    text = head_foot_stripper(text)
-
-    book.close()
-
-    #print(text)
+    with open(title, 'r', encoding='utf8') as book:
+        text = book.read()
+        text = punctuation_stripper(text)
+        text = head_foot_stripper(text)
 
     return text
 
@@ -31,7 +24,7 @@ def build_text(collocate_probabilities, text_size):
     next_word = starter
     output = ""
 
-    for i in range(int(text_size)):
+    for _ in range(text_size):
         output += next_word + " "
         max_probability = ["x", 0]
         for key in collocate_probabilities[next_word]:
@@ -66,21 +59,14 @@ def main():
     # Loading text
     text = load_book(sys.argv[1])
 
-    # Pulling basic wordlists/probabilities
-    wordlist = get_wordlist(text)
-    wordlist_probabilities = get_wordlist_probabilities(wordlist)
-
     # Pulling collocates/probabilities
     collocates = get_collocates(text)
     collocate_probabilities = get_collocates_probabilities(collocates)
 
-    #print(wordlist_probabilities)
-    #print(collocate_probabilities)
-
-    output = build_text(collocate_probabilities, sys.argv[2])
+    # Building and formatting output
+    output = build_text(collocate_probabilities, int(sys.argv[2]))
     final_output = format_output(output)
     print(final_output)
-
 
 
 main()

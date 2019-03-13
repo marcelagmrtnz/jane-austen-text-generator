@@ -7,22 +7,21 @@ def punctuation_stripper(text):
 
     no_punct_text = ""
 
+    valid_character_re = '[A-Za-z0-9]'
+    space_character_re = '\s|[!.,&$%\-"]'
+
     for char in text:
-        if re.fullmatch('[A-Za-z0-9]', char) is not None:
+        if re.fullmatch(valid_character_re, char) is not None:
             no_punct_text += char
-        elif re.fullmatch('\s|[!.,&$%\-"]', char) is not None:
+        elif re.fullmatch(space_character_re, char) is not None:
             if no_punct_text[-1:] != " ":
                 no_punct_text += " "
 
-    #print (no_punct_text)
     return no_punct_text
 
 # Strips text of formatting characters and headers/footers.
 def head_foot_stripper(text):
     text = text.split(" ")
-
-    #print(text)
-
 
     final_text = []
     loading = False
