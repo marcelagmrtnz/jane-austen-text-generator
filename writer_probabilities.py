@@ -27,7 +27,7 @@ def get_wordlist_probabilities(wordlist):
 def get_collocates(text):
     wordlist = {}
 
-    for i in range(len(text)):
+    for i in range(len(text) - 1):
         if text[i] in wordlist:
             if text[i + 1] in wordlist[text[i]]:
                 wordlist[text[i]][text[i + 1]] += 1

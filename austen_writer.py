@@ -67,7 +67,6 @@ def main():
 
     # Pulling tags
     pos_tags = get_tags(text)
-    print(pos_tags)
 
     # Building and formatting output
     output = build_text(collocate_probabilities, int(sys.argv[2]))
