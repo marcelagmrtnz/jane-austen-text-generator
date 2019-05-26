@@ -1,0 +1,3 @@
+# These folders should not be staged, etc.
+__pycache__/
+.idea/
