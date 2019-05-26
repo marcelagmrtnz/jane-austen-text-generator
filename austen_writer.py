@@ -5,6 +5,7 @@ from writer_eval import head_foot_stripper
 from writer_eval import punctuation_stripper
 from writer_probabilities import get_collocates
 from writer_probabilities import get_collocates_probabilities
+from writer_tags import get_tags
 
 
 def load_book(title):
@@ -56,6 +57,7 @@ def format_output(output):
 
 
 def main():
+
     # Loading text
     text = load_book(sys.argv[1])
 
@@ -63,10 +65,15 @@ def main():
     collocates = get_collocates(text)
     collocate_probabilities = get_collocates_probabilities(collocates)
 
+    # Pulling tags
+    pos_tags = get_tags(text)
+    print(pos_tags)
+
     # Building and formatting output
     output = build_text(collocate_probabilities, int(sys.argv[2]))
     final_output = format_output(output)
     print(final_output)
 
 
-main()
+if __name__ == "__main__":
+    main()
