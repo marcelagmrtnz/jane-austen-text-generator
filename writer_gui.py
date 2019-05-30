@@ -1,4 +1,5 @@
 import pyforms
+#from pyforms import BaseWidget
 from pyforms.basewidget import BaseWidget
 from pyforms.controls import ControlText
 from pyforms.controls import ControlButton
@@ -12,7 +13,7 @@ from writer_probabilities import get_collocates_probabilities
 class TextDisplay(BaseWidget):
 
     def __init__(self):
-        super(TextDisplay, self).__init__('Text Displau')
+        super(TextDisplay, self).__init__('Text Display')
 
         self._booktitle = ControlText('Book title:')
         self._textlength = ControlText('Number of words:')
@@ -32,7 +33,7 @@ class TextDisplay(BaseWidget):
         collocates = get_collocates(text)
         collocate_probabilities = get_collocates_probabilities(collocates)
 
-        output = build_text(collocate_probabilities)
+        output = build_text(collocate_probabilities, int(self._textlength.value))
         final_output = format_output(output)
 
         self._outputsentence.value = final_output
