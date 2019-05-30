@@ -21,6 +21,8 @@ class TextDisplay(BaseWidget):
         self._getsentence = ControlButton('Get Sentence')
 
         self._getsentence.value = self.__getSentence
+        
+        self.formset = [('_booktitle', '_textlength'), '_getsentence', '_outputsentence']
 
     def __getSentence(self):
         if self._booktitle.value.lower() == 'emma':
@@ -40,7 +42,9 @@ class TextDisplay(BaseWidget):
 
 
 if __name__ == "__main__":
-    pyforms.start_app(TextDisplay)
+   # pyforms.start_app(TextDisplay)
+    from pyforms import start_app
+    start_app(TextDisplay)
 
 
 
