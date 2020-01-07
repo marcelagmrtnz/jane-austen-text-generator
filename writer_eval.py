@@ -7,13 +7,13 @@ def punctuation_stripper(text):
 
     no_punct_text = ""
 
-    valid_character_re = '[A-Za-z0-9]'
-    space_character_re = '\s|[!.,&$%\-"]'
+    valid_character = re.compile('[A-Za-z0-9]')
+    space_character = re.compile('\s|[!.,&$%\-"]')
 
     for char in text:
-        if re.fullmatch(valid_character_re, char) is not None:
+        if valid_character.fullmatch(char) is not None:
             no_punct_text += char
-        elif re.fullmatch(space_character_re, char) is not None:
+        elif space_character.fullmatch(char) is not None:
             if no_punct_text[-1:] != " ":
                 no_punct_text += " "
 

@@ -20,7 +20,7 @@ def load_book(title):
 # Builds random text output. text_size refers to how many words will be output.
 def build_text(collocate_probabilities, text_size):
     # Initializing starter word.
-    starter = random.choice(list(collocate_probabilities.keys()))
+    starter = random.choice(collocate_probabilities.keys())
 
     next_word = starter
     output = ""
@@ -28,14 +28,16 @@ def build_text(collocate_probabilities, text_size):
     for _ in range(text_size):
         output += next_word + " "
         max_probability = ["x", 0]
+        #TODO: Use max() function with lambda instead of for loop
         for key in collocate_probabilities[next_word]:
             if collocate_probabilities[next_word][key] >= max_probability[1] and collocate_probabilities[next_word]:
                 max_probability[1] = collocate_probabilities[next_word][key]
                 max_probability[0] = key
+        # TODO: Implement smoothing/different probability system.
         if max_probability[0] in collocate_probabilities:
             next_word = max_probability[0]
         else:
-            next_word = random.choice(list(collocate_probabilities.keys()))
+            next_word = random.choice(collocate_probabilities.keys())
 
     return output
 
