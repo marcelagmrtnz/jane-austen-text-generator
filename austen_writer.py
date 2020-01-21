@@ -1,14 +1,14 @@
 import sys
 import random
 import re
-from writer_format import head_foot_stripper
-from writer_format import punctuation_stripper
-from writer_probabilities import get_bigrams
-from writer_probabilities import get_bigram_probabilities
+from supportive_scripts.writer_format import head_foot_stripper
+from supportive_scripts.writer_format import punctuation_stripper
+from supportive_scripts.writer_probabilities import get_bigrams
+from supportive_scripts.writer_probabilities import get_bigram_probabilities
 
 
 def load_book(title):
-    with open(title, 'r', encoding='utf8') as book:
+    with open('texts/' + title, 'r', encoding='utf8') as book:
         text = book.read()
         text = punctuation_stripper(text)
         text = head_foot_stripper(text)
