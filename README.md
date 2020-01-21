@@ -1,4 +1,4 @@
-# Stylized Random Text Generator
+# Jane Austen Stylized Random Text Generator
 
 This generator was built to synthesize sentences in the "writing style" of Jane Austen. Three of Jane Austen' most famous works (listed below) are analyzed, and bigrams are collected, then a random starter word is generated from the available words and the most probable next word is appended to the string. A final sentence then has minor formatting done on it and it is printed.
 
