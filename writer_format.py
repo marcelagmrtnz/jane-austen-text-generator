@@ -19,7 +19,7 @@ def punctuation_stripper(text):
 
     return no_punct_text
 
-# Strips text of formatting characters and headers/footers.
+# Strips text of formatting characters and headers/footers included in Project Gutenburg format.
 def head_foot_stripper(text):
     text = text.split(" ")
 
