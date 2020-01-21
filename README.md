@@ -17,5 +17,6 @@ Known Issues:
 -Tends to get stuck in a loop of 3-5 words. A window size of the 2 previous words in the built sentence so far is kept to make sure these aren't chosen as the next word (if they are a new random word is chosen instead), but large chunks of repetition still occur.
 
 Future Updates:
--An option to use a 'random dart' at each choice will be added, instead of just the most likely next word.
+-An option to use a 'random dart' at each choice will be added, instead of just the most likely next word.\n
 -Use of punctuation in the text input instead of stripping it, and beginning and end tags will be added to help with naturalne of speech, and to avoid some of the 'infinite loop' issues.
+-Use of POS tags to help with naturalness.
