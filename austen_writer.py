@@ -1,10 +1,10 @@
 import sys
 import random
 import re
-from supportive_scripts.writer_format import head_foot_stripper
-from supportive_scripts.writer_format import punctuation_stripper
-from supportive_scripts.writer_probabilities import get_bigrams
-from supportive_scripts.writer_probabilities import get_bigram_probabilities
+from utilities.writer_format import head_foot_stripper
+from utilities.writer_format import punctuation_stripper
+from utilities.writer_probabilities import get_bigrams
+from utilities.writer_probabilities import get_bigram_probabilities
 
 
 def load_book(title):
